@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from App_Login.models import UserProfile
 
 
 class CreateNewUser(UserCreationForm):
@@ -21,7 +22,7 @@ class CreateNewUser(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password1', 'password2')
+        fields = ( 'username', 'email', 'password1', 'password2')
 
 class LoginUser(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -36,3 +37,10 @@ class LoginUser(AuthenticationForm):
         label="",
         widget=forms.PasswordInput(attrs={'placeholder':"Password"})
     )
+
+class EditProfile(forms.ModelForm):
+    dob = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows':'3','cols':"50"}))
+    class Meta:
+        model = UserProfile
+        exclude = ('user',)
