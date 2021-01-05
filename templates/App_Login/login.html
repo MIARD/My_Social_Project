@@ -1,0 +1,53 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{%block title_block%}{{title}}{% endblock %}
+{% block css_block %}
+<style>
+  .center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+
+  }
+
+  .log_in {
+    width: 550px;
+    border: 1px solid #ccc;
+    padding: 40px;
+  }
+
+  .log_in input {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  /* .sign_up ul{
+    display: none;
+  } */
+  .signup {
+    width: 550px;
+    padding: 25px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+{% endblock %}
+{% block body_block %}
+<div class="center">
+  <div class="log_in">
+    <h3>Login Page</h3>
+    <form method="POST">
+      {{form|crispy}}
+      {% csrf_token %}
+      <button type="submit" style="width:100%" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+  <br>
+  <div class="signup">
+    <p>Don't have an account? <a href="{% url 'App_Login:sign_up' %}">Sign Up</a> </p>
+  </div>
+</div>
+
+{% endblock %}
