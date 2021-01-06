@@ -39,8 +39,8 @@ class LoginUser(AuthenticationForm):
     )
 
 class EditProfile(forms.ModelForm):
-    dob = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
-    description = forms.CharField(widget=forms.Textarea(attrs={'rows':'3','cols':"50"}))
+    dob = forms.DateField(required=False,widget=forms.TextInput(attrs={'type':'date'}))
+    description = forms.CharField(required=False,widget=forms.Textarea(attrs={'rows':'3','cols':"50"}))
     class Meta:
         model = UserProfile
         exclude = ('user',)
