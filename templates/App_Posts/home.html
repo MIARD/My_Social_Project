@@ -1,7 +1,7 @@
 {%extends 'navbar.html'%}
 {% block title_block %}{{title}}{%endblock%}
 {% block css_block %}
-<style >
+<style>
 
 </style>
 {% endblock%}
@@ -11,7 +11,7 @@
 <div class="row">
   <div class="col-sm-2">
     {% if user.user_profile.profile_pic %}
-    <img src="/media/{{user.user_profile.profile_pic}}" width="75px" height="75px" class ='rounded-circle' >
+    <img src="/media/{{user.user_profile.profile_pic}}" width="75px" height="75px" class='rounded-circle'>
     {% else %}
     <img src="/media/profile_pics/default.png" width="75px" height="75px" class='rounded-circle'>
     {% endif %}
@@ -22,9 +22,62 @@
     {{user.user_profile.full_name}}
   </div>
 </div>
-  <br>
+<br>
 {% endfor %}
 
 {% else %}
+<div class="row">
+  <div class="col-sm-8">
+    {% for post in posts %}
+    <div style="border:1px solid #888888" >
+      <div style="padding:10px">
+        <div style="display:inline-block;float:left;padding:10px;">
+        {% if post.author.user_profile.profile_pic %}
+        <img  src="/media/{{post.author.user_profile.profile_pic}}" width="40px" height="40px" class='rounded-circle'>
+        {% else %}
+        <img src="/media/profile_pics/default.png" width="40px" height="40px" class='rounded-circle'>
+        {% endif %}
+      </div>
+        <div style="display:inline-block; padding:5px;vertical-align:center">
+          <h5 style="display:inline;">{{post.author.user_profile.full_name}}</h5>
+          <br>
+          <a style="text-decoration:none;color:blue;" href="{% url 'App_Login:user' username=post.author.username %}">@{{post.author}}</a>
+        </div>
+      </div>
+      <br>
+      <img src="/media/{{post.image}}" alt="Image" width=100%>
+      <div style="padding:20px">
+        <h5>{{post.caption}}</h5>
+        {% if post.pk in liked_post_list %}
+        <a href="{%url 'App_Posts:unliked' pk=post.pk %}"><i class="fa fa-heart" style="font-size:30px;color:red;"></i></a>
+        {% else %}
+        <a href="{%url 'App_Posts:liked' pk=post.pk %}"><i class="fa fa-heart-o" style="font-size:30px; color:black;"></i></a>
+      {% endif %}
+      <b>{{post.liked_post.count}} Likes</b>
+      </div>
+      <br>
+    </div>
+    <br>
+    {% endfor %}
+  </div>
+  <div class="col-sm-4">
+    <div class="row">
+      <div class="col-sm-4">
+        {% if user.user_profile.profile_pic %}
+        <img src="/media/{{user.user_profile.profile_pic}}" width="75px" height="75px" class='rounded-circle'>
+        {% else %}
+        <img src="/media/profile_pics/default.png" width="75px" height="75px" class='rounded-circle'>
+        {% endif %}
+      </div>
+      <div class="col-sm-8">
+        <h5>{{user.user_profile.full_name}}</h5>
+        <h6>@{{user.username}}</h6>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
 {% endif %}
 {% endblock %}
